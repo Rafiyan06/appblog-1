@@ -19,6 +19,7 @@ public function form(){
             $post->title = $title;
             $post->article = $article;
             $post->save();
+            $notif = 'Title dan article telah berhasil ditambahkan';
         }
     }
 
@@ -28,6 +29,39 @@ public function form(){
 
         $post_list = Post::all();
 
-        view('backend.Article.list', ['post_list' => $post_list]);
+        $flashdata = $this->session->flashdata();
+
+        view('backend.Article.list', ['post_list' => $post_list, 'flashdata' => $flashdata]);
     }
+    public function hapus($id){
+        $post = Post::find($id);
+        $post->delete();
+
+        $this->session->set_flashdata('notif' , 'Data berhasil dihapus');
+        redirect('backend/article/list');
+    }
+        public function ubah($id){
+
+            $notif = '';
+
+            $post = Post::find($id);
+            if($this->input->post()){
+
+                $title = $this->input->post('title');
+                $article = $this->input->post('article');
+        
+                if($title == '' || $article == ''){
+                    $notif = 'Title dan article tidak boleh kosong';
+        
+                }else{
+                    $post = new Post ();
+                    $post->title = $title;
+                    $post->article = $article;
+                    $post->save();
+                    $notif = 'Title dan article telah berhasil diubah';
+                }
+            }
+
+            view('backend.Article.form', ['notif' => $notif, 'post' => $post]);
+        }
 }
