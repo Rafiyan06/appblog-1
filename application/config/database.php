@@ -7,6 +7,7 @@ use Illuminate\Container\Container;
 
 $dotenv = Dotenv\Dotenv::createImmutable(__DIR__ . DIRECTORY_SEPARATOR . '../../');
 $dotenv->load();
+
 /*
 | -------------------------------------------------------------------
 | DATABASE CONNECTIVITY SETTINGS
@@ -100,6 +101,7 @@ $db['default'] = array(
 	'failover' => array(),
 	'save_queries' => TRUE
 );
+
 $capsule = new Capsule;
 
 $capsule->addConnection([

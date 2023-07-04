@@ -114,7 +114,7 @@ switch (ENVIRONMENT)
  *
  * NO TRAILING SLASH!
  */
-	$application_folder =__DIR__.DIRECTORY_SEPARATOR.'../application';
+	$application_folder = __DIR__.DIRECTORY_SEPARATOR.'../application';
 
 /*
  *---------------------------------------------------------------

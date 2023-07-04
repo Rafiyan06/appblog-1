@@ -4,27 +4,28 @@ use Orm\Post;
 
 class Article extends MY_Controller{
 
-public function form(){
-    $notif ='';
+    public function form(){
+        $notif = '';
 
-    if($this->input->post()){
-        $title = $this->input->post('title');
-        $article = $this->input->post('article');
+        if($this->input->post()){
+            $title = $this->input->post('title');
+            $article = $this->input->post('article');
 
-        if($title == '' || $article == ''){
-            $notif = 'Title dan article tidak boleh kosong';
+            if($title == '' || $article == ''){
+                $notif = 'Title dan Article tidak boleh kosong!';
+            }else{
+                $post = new Post();
+                $post->title = $title;
+                $post->article = $article;
+                $post->save(); 
+                $notif = 'Title dan Article telah ditambahkan';
+            }
 
-        }else{
-            $post = new Post ();
-            $post->title = $title;
-            $post->article = $article;
-            $post->save();
-            $notif = 'Title dan article telah berhasil ditambahkan';
         }
+
+        view('backend.Article.form', ['notif' => $notif]);
     }
 
-    view('backend.Article.form', ['notif' => $notif]);
-}
     public function list(){
 
         $post_list = Post::all();
@@ -33,35 +34,35 @@ public function form(){
 
         view('backend.Article.list', ['post_list' => $post_list, 'flashdata' => $flashdata]);
     }
+
     public function hapus($id){
         $post = Post::find($id);
         $post->delete();
 
-        $this->session->set_flashdata('notif' , 'Data berhasil dihapus');
+        $this->session->set_flashdata('notif', 'Data berhasil dihapus');
         redirect('backend/article/list');
     }
-        public function ubah($id){
 
-            $notif = '';
+    public function ubah($id){
+        $notif = '';
 
-            $post = Post::find($id);
-            if($this->input->post()){
+        $post = Post::find($id);
+        if($this->input->post()){
+            $title = $this->input->post('title');
+            $article = $this->input->post('article');
 
-                $title = $this->input->post('title');
-                $article = $this->input->post('article');
-        
-                if($title == '' || $article == ''){
-                    $notif = 'Title dan article tidak boleh kosong';
-        
-                }else{
-                    $post = new Post ();
-                    $post->title = $title;
-                    $post->article = $article;
-                    $post->save();
-                    $notif = 'Title dan article telah berhasil diubah';
-                }
+            if($title == '' || $article == ''){
+                $notif = 'Title dan Article tidak boleh kosong!';
+            }else{
+                $post->title = $title;
+                $post->article = $article;
+                $post->save(); 
+                $notif = 'Title dan Article telah diubah';
             }
-
-            view('backend.Article.form', ['notif' => $notif, 'post' => $post]);
         }
+
+        view('backend.Article.form', ['notif' => $notif, 'post' => $post]);
+
+    }
+
 }

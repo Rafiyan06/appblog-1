@@ -1,8 +1,7 @@
 <?php
-
 namespace Orm;
 
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Model; 
 
 class Post extends Model 
 {
